@@ -1,0 +1,5 @@
+- pipeline.id: movies-pipeline
+  path.config: "/usr/share/logstash/pipeline/movies.conf"
+
+- pipeline.id: ratings-pipeline
+  path.config: "/usr/share/logstash/pipeline/ratings.conf"

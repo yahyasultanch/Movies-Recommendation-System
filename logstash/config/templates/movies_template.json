@@ -1,0 +1,20 @@
+{
+    "index_patterns": ["movies*"],
+    "template": {
+      "settings": {
+        "number_of_shards": 1
+      },
+      "mappings": {
+        "properties": {
+          "movieId":    { "type": "keyword" },
+          "title":      { "type": "text" },
+          "year":       { "type": "integer" },
+          "genres":     { "type": "keyword" },
+          "description":{ "type": "text" },
+          "popularity": { "type": "float" },
+          "adult":      { "type": "boolean" }
+        }
+      }
+    }
+  }
+  
