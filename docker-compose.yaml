@@ -1,0 +1,79 @@
+version: "3.3"
+
+services:
+  # ------------------------------------------------------
+  # 1) Elasticsearch
+  # ------------------------------------------------------
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    container_name: es01
+    environment:
+      - node.name=es01
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - http.port=9200
+      - xpack.security.enabled=false            # Disable security for local dev
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"            # Adjust heap size if needed
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data  # Local volume for ES data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "9200:9200"
+
+  # ------------------------------------------------------
+  # 2) Kibana
+  # ------------------------------------------------------
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.16.1
+    container_name: kibana
+    environment:
+      - SERVER_NAME=kibana
+      - ELASTICSEARCH_HOSTS=http://es01:9200   # HTTP since security is disabled
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5601"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      es01:
+        condition: service_healthy
+    ports:
+      - "5601:5601"
+
+  # ------------------------------------------------------
+  # 3) Logstash
+  # ------------------------------------------------------
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.16.1
+    container_name: logstash
+    # Sleep is optional, but commonly used to keep the container running for dev
+    entrypoint: [ "sh", "-c", "sleep 2073600" ]
+    depends_on:
+      es01:
+        condition: service_healthy
+    environment:
+      - xpack.monitoring.enabled=false
+    command: logstash -f pipeline/movies.conf --config.reload.automatic
+    volumes:
+      # pipeline, config, dataset as needed
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+      - ./logstash/dataset:/usr/share/logstash/dataset
+      - ./logstash/config/templates:/usr/share/logstash/config/templates
+    # Map ports if you need to receive data from Beats or other sources:
+    # ports:
+    #   - "5044:5044"
+
+# ------------------------------------------------------
+# Named Volumes
+# ------------------------------------------------------
+volumes:
+  esdata01:

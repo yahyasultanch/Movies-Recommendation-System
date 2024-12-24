@@ -1,0 +1,8 @@
+pandas
+numpy
+elasticsearch==8.6.2
+scikit-surprise
+matplotlib
+scikit-learn
+jupyter
+faiss-cpu
