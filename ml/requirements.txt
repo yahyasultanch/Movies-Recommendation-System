@@ -7,3 +7,4 @@ scikit-learn
 jupyter
 faiss-cpu
 fuzzywuzzy
+sentence_transformers
