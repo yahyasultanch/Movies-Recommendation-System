@@ -13,13 +13,13 @@ services:
       - bootstrap.memory_lock=true
       - http.port=9200
       - xpack.security.enabled=false            # Disable security for local dev
-      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"            # Adjust heap size if needed
+      - "ES_JAVA_OPTS=-Xms4g -Xmx4g"    
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - esdata01:/usr/share/elasticsearch/data  # Local volume for ES data
+      - esdata01:/usr/share/elasticsearch/data  
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9200"]
       interval: 30s
@@ -54,7 +54,6 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:8.16.1
     container_name: logstash
-    # Sleep is optional, but commonly used to keep the container running for dev
     entrypoint: [ "sh", "-c", "sleep 2073600" ]
     depends_on:
       es01:
@@ -63,12 +62,10 @@ services:
       - xpack.monitoring.enabled=false
     command: logstash -f pipeline/movies.conf --config.reload.automatic
     volumes:
-      # pipeline, config, dataset as needed
       - ./logstash/pipeline:/usr/share/logstash/pipeline
       - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ./logstash/dataset:/usr/share/logstash/dataset
       - ./logstash/config/templates:/usr/share/logstash/config/templates
-    # Map ports if you need to receive data from Beats or other sources:
     # ports:
     #   - "5044:5044"
 
