@@ -12,7 +12,7 @@ services:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - http.port=9200
-      - xpack.security.enabled=false            # Disable security for local dev
+      - xpack.security.enabled=false           
       - "ES_JAVA_OPTS=-Xms4g -Xmx4g"    
     ulimits:
       memlock:
