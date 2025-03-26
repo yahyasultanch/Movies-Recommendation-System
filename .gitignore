@@ -171,5 +171,3 @@ cython_debug/
 .pypirc
 
 dataset/
-
-UI_screenshots/
