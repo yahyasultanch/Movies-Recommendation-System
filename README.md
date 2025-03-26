@@ -50,7 +50,7 @@ Uses the same advanced content-based filtering approach powered by SentenceTrans
 
 Here’s a quick snapshot of how the UI looks when running locally:
 
-![UI Screenshot](./UI_screenshots/screenshotUI.jpg?raw=true "Movie Recommender UI")
+![UI Screenshot](ui_screenshots/screenshot_ui.jpg?raw=true "Movie Recommender UI")
 
 ## **Acknowledgments**
 > ElasticSearch and Logstash for scalable data ingestion and storage.
