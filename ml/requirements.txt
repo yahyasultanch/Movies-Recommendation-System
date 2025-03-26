@@ -8,3 +8,4 @@ jupyter
 faiss-cpu
 fuzzywuzzy
 sentence_transformers
+streamlit
