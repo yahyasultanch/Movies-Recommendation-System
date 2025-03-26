@@ -42,6 +42,15 @@ Saved components for later use(as listed below)
 A terminal-based user interface.
 Uses fuzzy matching for user-provided movie titles.
 Fetches top recommendations based on the advanced content-based filtering model.
+- Web Frontend (streamlit_app.py):
+A Streamlit-based web interface for the recommendation system. Lets users type in a movie name (allows fuzzy matching) and receive top recommendations in a browser-friendly layout.
+Uses the same advanced content-based filtering approach powered by SentenceTransformer embeddings and FAISS.
+
+## Working User Interface
+
+Here’s a quick snapshot of how the UI looks when running locally:
+
+![UI Screenshot](UI_screenshots/screenshotUI.jpg?raw=true "Movie Recommender UI")
 
 ## **Acknowledgments**
 > ElasticSearch and Logstash for scalable data ingestion and storage.
